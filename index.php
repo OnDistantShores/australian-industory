@@ -356,23 +356,49 @@
                 			}
                 		};
 
+                        var yearButtons = Array();
                         <?php foreach ($years as $year) { ?>
-                            $("#pie-controls").append(
-                                $("<span />")
-                                    .attr("class", "year")
-                                    .text(<?php echo $year; ?>)
-                                    .click(function() {
-                                        var year = <?php echo $year; ?>;
-                            			pieConfig.data.datasets[0].data = data[year];
-                            			pieConfig.data.labels = labels[year];
-                            			window.pie.update();
-
-                                        $("#pie-controls .year").removeClass("selected");
-                                        $(this).addClass("selected");
-                                    })
-                            );
+                            var newYearButton = $("<span />")
+                                .attr("class", "year")
+                                .text(<?php echo $year; ?>)
+                                .click(function(event) {
+                                    handleYearClick(event.target, true);
+                                });
+                            $("#pie-controls").append(newYearButton);
+                            yearButtons.push(newYearButton);
                         <?php } ?>
                         $("#pie-controls .year").first().addClass("selected");
+
+                        var handleYearClick = function(button, wasOrganicClick) {
+                            var year = $(button).text();
+                            pieConfig.data.datasets[0].data = data[year];
+                            pieConfig.data.labels = labels[year];
+                            window.pie.update();
+
+                            $("#pie-controls .year").removeClass("selected");
+                            $(button).addClass("selected");
+
+                            // Reset the timer - different amount of time depending on the type of click
+                            clearTimeout(timerHandle);
+                            timerHandle = setTimeout(autoMoveYear, (wasOrganicClick ? 20000 : 2000));
+                        };
+
+                        var autoMoveYear = function() {
+                            var selectNextItem = false;
+                            $.each(yearButtons, function(index, element) {
+                                if (selectNextItem) {
+                                    handleYearClick(element, false);
+                                    selectNextItem = false;
+                                }
+                                else if ($(element).hasClass("selected")) {
+                                    selectNextItem = true;
+                                }
+                            });
+                            if (selectNextItem) { // Ths would happen if the last element was previously selected
+                                handleYearClick($(yearButtons[0]), false);
+                            }
+                        };
+                        var timerHandle = setTimeout(autoMoveYear, 2000);
                 	</script>
 
                     <p>This incredible resource brings to life the story of our nation over the 80-odd year period it captures.
