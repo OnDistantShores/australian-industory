@@ -108,7 +108,7 @@
     foreach ($abrVsNeisLabels as $industry) {
         $matchingEntry = $neisRows[$industry];
         if (!$matchingEntry) {
-            echo "matching issue for $industry<br />";
+            echo "Error: no matching entry for $industry<br />";
             continue;
         }
 
@@ -172,16 +172,24 @@
 <body>
     <h1>Australian Indu<span class="story">Story</span></h1>
     <h2>"Where we've come from, where we're at, and where we need help"</h2>
-    <h3>A GovHack 2019 project by CamBamBaJam</h3>
 
     <div>Menu: Overview :: The story :: Data sources used :: Data details & disclaimers :: More info</div>
 
     <a name='overview' />
-    <p>Overview goes here - AKA "What this is"</p>
+    <h2>Overview</h2>
+    <p>This is a project entry for GovHack 2019. I have attempted to tell a cohesive story about the past & present
+        of Australian industry by homogenising, contextualising & visualising a number of disparate datasets, namely the
+        <a href='https://drive.google.com/drive/folders/1D0Yj4-Lr-P2XEzuv4L2M_sEBhkCGUtem' target='_blank'>Sands &
+        McDougal business directory data</a>,
+        <a href='https://data.gov.au/dataset/ds-dga-8fc2e133-29f4-4123-a977-b245b32e62df/details?q=' target='_blank'>ABN register data</a> and
+        <a href='https://data.gov.au/dataset/ds-dga-932648b1-7ca1-46c4-99ba-d9a41f98d42f/details?q=NEIS' target='_blank'>
+            New business assistance with NEIS data</a>. I hope you like it!</p>
+
+    <a name='the-story' />
+    <h2>The story</h2>
 
     <p>"You have to know the past to understand the present" - Carl Sagan</p>
 
-    <a name='the-story' />
     <p>Australia's growth from settlement to the "lucky" country we enjoy today has been in no small part due
         to an ever-changing story of economic growth.</p>
 
@@ -204,6 +212,17 @@
 	</div>
     <div id="pie-controls"></div>
 	<script>
+        var colours = [
+            "#003f5c",
+            "#2f4b7c",
+            "#665191",
+            "#a05195",
+            "#d45087",
+            "#f95d6a",
+            "#ff7c43",
+            "#ffa600",
+        ];
+
 		var data = Array();
         var labels = Array();
 
@@ -221,30 +240,7 @@
 			data: {
 				datasets: [{
 					data: data[1896],
-					backgroundColor: [
-						"#488f31",
-						"#6ca257",
-						"#8eb67c",
-						"#afc9a2",
-						"#d0ddc9",
-						"#f1f1f1",
-						"#f1cfce",
-						"#eeadad",
-						"#e88b8d",
-						"#df676e",
-						"#de425b",
-                        "#488f31",
-						"#6ca257",
-						"#8eb67c",
-						"#afc9a2",
-						"#d0ddc9",
-						"#f1f1f1",
-						"#f1cfce",
-						"#eeadad",
-						"#e88b8d",
-						"#df676e",
-						"#de425b",
-					],
+					backgroundColor: colours.concat(colours).concat(colours),
 					label: 'Percentage of businesses by year'
 				}],
 				labels: labels[1896]
@@ -302,41 +298,7 @@
 			data: {
 				datasets: [{
 					data: <?php echo json_encode($currentABNsDataset); ?>,
-					backgroundColor: [
-						"#488f31",
-						"#6ca257",
-						"#8eb67c",
-						"#afc9a2",
-						"#d0ddc9",
-						"#f1f1f1",
-						"#f1cfce",
-						"#eeadad",
-						"#e88b8d",
-						"#df676e",
-						"#de425b",
-                        "#488f31",
-						"#6ca257",
-						"#8eb67c",
-						"#afc9a2",
-						"#d0ddc9",
-						"#f1f1f1",
-						"#f1cfce",
-						"#eeadad",
-						"#e88b8d",
-						"#df676e",
-						"#de425b",
-						"#488f31",
-						"#6ca257",
-						"#8eb67c",
-						"#afc9a2",
-						"#d0ddc9",
-						"#f1f1f1",
-						"#f1cfce",
-						"#eeadad",
-						"#e88b8d",
-						"#df676e",
-						"#de425b",
-					],
+					backgroundColor: colours.concat(colours),
 					label: 'Percentage of businesses in 2016'
 				}],
 				labels: <?php echo json_encode($currentABNsLabels); ?>
@@ -386,11 +348,11 @@
 			labels: <?php echo json_encode($abrVsNeisLabels); ?>, // TODO needs the % taken off
 			datasets: [{
 				label: 'ABN register',
-				backgroundColor: "#488f31",
+				backgroundColor: "#003f5c",
 				data: <?php echo json_encode($abrVsNeisAbrDataset); ?> // TODO needs to be the % data
 			}, {
 				label: 'NEIS data',
-				backgroundColor: "#de425b",
+				backgroundColor: "#ffa600",
 				data: <?php echo json_encode($abrVsNeisNeisDataset); ?>  // TODO needs to actually be the NEIS data
 			}]
 		};
