@@ -60,6 +60,60 @@
 
     // -------
 
+    $tmLinkData = array();
+
+    $tmlinkRaw = file_get_contents("tmlink.csv");
+
+    // Index the data by year
+    $rows = str_getcsv($tmlinkRaw, PHP_EOL);
+    $isFirst = true;
+    foreach ($rows as $row) {
+        if (!$isFirst) {
+            $rowWithFields = str_getcsv($row, ",");
+            $decadeName = $rowWithFields[0] . "s";
+
+            if (!isset($tmLinkData[$decadeName])) {
+                $tmLinkData[$decadeName] = array();
+            }
+            $tmLinkData[$decadeName][] = $rowWithFields;
+        }
+        $isFirst = false;
+    }
+
+    $tmLinkDecades = array_keys($tmLinkData);
+
+    $tmLinkLabels = array();
+    $tmLinkDatasets = array();
+
+    $setIndustryOrder = null;
+
+    foreach ($tmLinkData as $decade => $rows) {
+        $tmLinkLabels[$decade] = array();
+        $tmLinkDatasets[$decade] = array();
+
+        $rowsIndexedByIndustry = array();
+        foreach ($rows as $row) {
+            $rowsIndexedByIndustry[$row[1]] = $row;
+        }
+
+        if (!$setIndustryOrder) {
+            // Order the rows
+            uasort($rowsIndexedByIndustry, "compareBySize");
+
+            // Save this order to consistently apply henceforth
+            $setIndustryOrder = array_keys($rowsIndexedByIndustry);
+        }
+
+        foreach ($setIndustryOrder as $industry) {
+            $row = $rowsIndexedByIndustry[$industry];
+
+            $tmLinkLabels[$decade][] = $row[1] . " (" . $row[3] . ")";
+            $tmLinkDatasets[$decade][] = $row[2];
+        }
+    }
+
+    // -------
+
     $currentABNsDataset = array();
     $currentABNsLabels = array();
 
@@ -158,13 +212,13 @@
             padding-top: 10px;
         }
 
-        #pie-controls {
+        .pie-controls {
             text-align: center;
             padding: 5px;
             margin-bottom: 15px;
             margin-top: -10px;
         }
-        #pie-controls .year {
+        .pie-controls .year {
             font-size: 18px;
             text-decoration: underline;
             display: inline-block;
@@ -173,7 +227,7 @@
             padding: 10px;
             cursor: pointer;
         }
-        #pie-controls .year.selected {
+        .pie-controls .year.selected {
             font-weight: bold;
             text-decoration: none;
             background-color: grey;
@@ -308,7 +362,7 @@
                 	<div class="chart-container ftco-animate" id="pie-canvas-holder" style="width:900px; height: 480px;">
                 		<canvas id="pie-chart-area"></canvas>
                 	</div>
-                    <div id="pie-controls"></div>
+                    <div class="pie-controls" id="pie-controls"></div>
                 	<script>
                         var colours = [
                             "#003f5c",
@@ -407,8 +461,112 @@
                         We can see how services industries experienced steady growth across this time, but especially into the
                         1970s when oil price rises led to recession and a slowing of traditional industries.</p>
 
-                    <p>TODO Summarise 70s->2010s here, only if we don't add Trademark  data stuff. Lean on
+                    <p>TODO 70s->2000s intro & intro trademark data. Look at on
                         https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/1301.0~2012~Main%20Features~Evolution%20of%20Australian%20Industry~239</p>
+
+                    <h2 class="mb-4 ftco-animate">Industry mix of registered trademarks over time</h2>
+                    <div class="heading-footnote ftco-animate">(Australia, 1970-1999)</div>
+
+                	<div class="chart-container ftco-animate" id="tmlink-pie-canvas-holder" style="width:900px; height: 480px;">
+                		<canvas id="tmlink-pie-chart-area"></canvas>
+                	</div>
+                    <div class='pie-controls' id="tmlink-pie-controls"></div>
+                	<script>
+                        var colours = [
+                            "#003f5c",
+                            "#2f4b7c",
+                            "#665191",
+                            "#a05195",
+                            "#d45087",
+                            "#f95d6a",
+                            "#ff7c43",
+                            "#ffa600",
+                        ];
+
+                		var tmLinkData = Array();
+                        var tmLinkLabels = Array();
+
+                        <?php
+                            foreach ($tmLinkLabels as $decade => $rows) {
+                                echo "tmLinkLabels[\"$decade\"] = " . json_encode($rows) . PHP_EOL;
+                            }
+                            foreach ($tmLinkDatasets as $decade => $rows) {
+                                echo "tmLinkData[\"$decade\"] = " . json_encode($rows) . PHP_EOL;
+                            }
+                        ?>
+
+                		var tmLinkPieConfig = {
+                			type: 'pie',
+                			data: {
+                				datasets: [{
+                					data: tmLinkData["1970s"],
+                					backgroundColor: colours,
+                					label: 'Percentage of classifiable trademarks per year'
+                				}],
+                				labels: tmLinkLabels["1970s"]
+                			},
+                			options: {
+                				responsive: true,
+                                cutoutPercentage: 40,
+                                legend: {
+                                    position: "right"
+                                },
+                                animation: {
+                                    animateRotate: true,
+                                    animateScale: true,
+                                }
+                			}
+                		};
+
+                        var tmLinkDecadeButtons = Array();
+                        <?php foreach ($tmLinkDecades as $decade) { ?>
+                            var newDecadeButton = $("<span />")
+                                .attr("class", "year")
+                                .text("<?php echo $decade; ?>")
+                                .click(function(event) {
+                                    handleTmLinkDecadeClick(event.target, true);
+                                });
+                            $("#tmlink-pie-controls").append(newDecadeButton);
+                            tmLinkDecadeButtons.push(newDecadeButton);
+                        <?php } ?>
+                        $("#tmlink-pie-controls .year").first().addClass("selected");
+
+                        var handleTmLinkDecadeClick = function(button, wasOrganicClick) {
+                            var decade = $(button).text();
+
+                            tmLinkPieConfig.data.datasets[0].data = tmLinkData[decade];
+                            tmLinkPieConfig.data.labels = tmLinkLabels[decade];
+                            window.tmLinkPie.update();
+
+                            $("#tmlink-pie-controls .year").removeClass("selected");
+                            $(button).addClass("selected");
+
+                            // Reset the timer - different amount of time depending on the type of click
+                            clearTimeout(tmLinkTimerHandle);
+                            tmLinkTimerHandle = setTimeout(tmLinkAutoMoveDecade, (wasOrganicClick ? 20000 : 2000));
+                        };
+
+                        var tmLinkAutoMoveDecade = function() {
+                            var selectNextItem = false;
+                            $.each(tmLinkDecadeButtons, function(index, element) {
+                                if (selectNextItem) {
+                                    handleTmLinkDecadeClick(element, false);
+                                    selectNextItem = false;
+                                }
+                                else if ($(element).hasClass("selected")) {
+                                    selectNextItem = true;
+                                }
+                            });
+                            if (selectNextItem) { // Ths would happen if the last element was previously selected
+                                handleTmLinkDecadeClick($(tmLinkDecadeButtons[0]), false);
+                            }
+                        };
+                        var tmLinkTimerHandle = setTimeout(tmLinkAutoMoveDecade, 2000);
+                	</script>
+
+                    <p>TODO Overview learnings from trademark data</p>
+
+                    <p>TODO what happened 2000->2015</p>
 
                     <h2 class="mb-4 ftco-animate">Current industry mix according to ABN register</h2>
                     <div class="heading-footnote ftco-animate">(Australia, 2016)</div>
@@ -483,6 +641,9 @@
                 		window.onload = function() {
                 			var pieCtx = document.getElementById('pie-chart-area').getContext('2d');
                 			window.pie = new Chart(pieCtx, pieConfig);
+
+                			var tmLinkCtx = document.getElementById('tmlink-pie-chart-area').getContext('2d');
+                			window.tmLinkPie = new Chart(tmLinkCtx, tmLinkPieConfig);
 
                 			var abnsCtx = document.getElementById('abns-pie-chart-area').getContext('2d');
                 			window.abnsPie = new Chart(abnsCtx, abnsPieConfig);
@@ -644,8 +805,6 @@
     <script src="js/aos.js"></script>
     <script src="js/jquery.animateNumber.min.js"></script>
     <script src="js/scrollax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="js/google-map.js"></script>
 
     <script src="js/main.js"></script>
 
