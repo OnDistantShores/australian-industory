@@ -176,10 +176,12 @@
 
     <div>Menu: Overview :: The story :: Data sources used :: Data details & disclaimers :: More info</div>
 
+    <a name='overview' />
     <p>Overview goes here - AKA "What this is"</p>
 
     <p>"You have to know the past to understand the present" - Carl Sagan</p>
 
+    <a name='the-story' />
     <p>Australia's growth from settlement to the "lucky" country we enjoy today has been in no small part due
         to an ever-changing story of economic growth.</p>
 
@@ -288,7 +290,7 @@
     <p>TODO Summarise 70s->2010s here, only if we don't add Trademark  data stuff. Lean on
         https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/1301.0~2012~Main%20Features~Evolution%20of%20Australian%20Industry~239</p>
 
-    <h3>Current industry mix according to ABR</h3>
+    <h3>Current industry mix according to ABN register</h3>
     <div class="heading-footnote">(Australia, 2016)</div>
 
     <div class="chart-container" id="abns-pie-canvas-holder" style="width:900px; height: 500px;">
@@ -353,10 +355,23 @@
 		};
 	</script>
 
-    <p>TODO Summary of where Australia is at today</p>
+    <p>Today, Australia is dominated by its services sector, making up almost 80% of our workforce. This is evident in
+        the <a href='https://data.gov.au/dataset/ds-dga-8fc2e133-29f4-4123-a977-b245b32e62df/details?q=' target='_blank'>ABN register data</a>,
+        showing areas like finance, professional services & real estate as very strong. Some of these areas show significant
+        growth since the end of the business directory dataset in 1975.
+        While manufacturing is still a strong industry, its strength is consolidated in a relatively smaller
+        number of larger companies, hence being a smaller proportion on the ABN register and a major decrease
+        since the end of the business directory dataset. Retail has similarly fallen dramatically.</p>
 
-    <p>TODO something like...Looking to the future, here's what we need. The NEIS data gives us a glimpse of how well we're placed
-        to get there.</p>
+    <p>The Australian government <a href='https://joboutlook.gov.au/futureofwork' target='_blank'>predicts</a> that the
+        biggest jobs growth in the next 5 years will be in the areas of <strong>Health care & social assistance</strong>,
+        <strong>Construction</strong>, <strong>Education & training</strong> and <strong>Professional, scientific &
+        technical services</strong>. How well-placed are we looking for growth in these areas?</p>
+
+    <p>The <a href='https://data.gov.au/dataset/ds-dga-932648b1-7ca1-46c4-99ba-d9a41f98d42f/details?q=NEIS' target='_blank'>
+        New business assistance with NEIS</a> data shows us how many emerging businesses we're seeing
+        in these industries. This gives us indicators about how well-placed we'll be in future years to meet economic
+        demands on our different markets, and how mature we can expect the workforce to be in these areas.</p>
 
     <h3>Industries of today's businesses according to ABN register v.s. NEIS enrollments</h3>
     <div class="heading-footnote">(compared proportionally, excluding "Other")</div>
@@ -425,13 +440,53 @@
 		};
 	</script>
 
-    <p>TODO learnings/implications</p>
+    <p>This data shows a significant gap between the current industrial mix of businesses and those on the rise - and
+        that's not necessarily a bad thing. We see strong interest from new businesses in growth areas such as professional,
+        scientific & technical services, as well as in stalwarts such as manufacturing. It's reassuring an appropriate focus
+        on the other growth areas of health care & social assistance as well as education & training. However there does
+        appear to be hints of a significant shortfall in constructure. It is a surprise to see dramatically few businesses
+        launching into the financial insurance space considering the current strength of that industry.</p>
 
-    <p>TODO Data sources used</p>
+    <p>Thank you for your attention and interest in this proejct. I hope you've found it both informative & entertaining!</p>
 
-    <p>TODO Data details & disclaimers</p>
+    <a name='data-sources' />
+    <h2>Data sources</h2>
+    <p><ul>
+        <li><a href='https://drive.google.com/drive/folders/1D0Yj4-Lr-P2XEzuv4L2M_sEBhkCGUtem' target='_blank'>Sands &
+                McDougal business directory data</a></li>
+        <li><a href='https://data.gov.au/dataset/ds-dga-8fc2e133-29f4-4123-a977-b245b32e62df/details?q=' target='_blank'>ABN register data</a></li>
+        <li><a href='https://data.gov.au/dataset/ds-dga-932648b1-7ca1-46c4-99ba-d9a41f98d42f/details?q=NEIS' target='_blank'>
+            New business assistance with NEIS</a></li>
+    </ul></p>
 
-    <p>TODO More info - github link, project page link, contact</p>
+    <a name='data-details' />
+    <h2>Data details</h2>
+    <p>Some various detailed notes about how this data was used:<ul>
+        <li>The business history only covers Victoria, whereas other data was Australia-wide. Unfortunately no
+            equivalent national data was available, and I used it regardless under the assumption that the
+            Victorian data was regardless representative of Australian data when taken as percentages.</li>
+        <li>Extremely minor groupings (&lt;13 businesses) were removed from 2016 ABN register data. These were
+            "government admin & defence" (2), "personal & other services" (2) and "multi-role organisation" (12).
+            Also removed blanks (497).</li>
+        <li>The "current" ABN register data was as at end of FY2016, whereas NEIS data covered 2015-2019.</li>
+        <li>The NEIS data did some combining of industries which have low representation with "Other Services" to
+            form a single "Other" category. I have done the same for the ABN register data with mining, "electricity,
+            gas, water & waste" and "public administration & safety", all of which were &lt;1%. In the ABN register data,
+            I combined forestry & fishing into agirculture, as the NEIS data also did.</li>
+    </ul></p>
+
+    <a name='more-info' />
+    <h2>More info</h2>
+    <p><ul>
+        <li><a href='https://github.com/OnDistantShores/australian-industory' target='_blank'>Project code on Github</a></li>
+        <li><a href='https://hackerspace.govhack.org/projects/australian_industory' target='_blank'>Project entry page on Hackerspace</a></li>
+        <li><a href='mailto:cameron.ross@gmail.com' target='_blank'>Contact me</a></li>
+        <li>Other references used:<ul>
+            <li><a href='https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/1301.0~2012~Main%20Features~Evolution%20of%20Australian%20Industry~239' target='_blank'>Evolution of Australian industry</a></li>
+            <li><a href='https://en.wikipedia.org/wiki/Economy_of_Australia' target='_blank'>Economy of Australia</a></li>
+            <li><a href='https://joboutlook.gov.au/futureofwork' target='_blank'>Future of work</a></li>
+        </ul></li>
+    </ul></p>
 
 </body>
 
