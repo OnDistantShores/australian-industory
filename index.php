@@ -176,10 +176,26 @@
 
     <div>Menu: Overview :: The story :: Data sources used :: Data details & disclaimers :: More info</div>
 
-    <p>Carl Sagan once said "You have to know the past to understand the present".</p>
+    <p>Overview goes here - AKA "What this is"</p>
 
-    <h3>Industry mix historically over time</h3>
-    <h4>(Victoria 1896-1975)</h4>
+    <p>"You have to know the past to understand the present" - Carl Sagan</p>
+
+    <p>Australia's growth from settlement to the "lucky" country we enjoy today has been in no small part due
+        to an ever-changing story of economic growth.</p>
+
+    <p>In the early days of European settlement, industrial and commercial development was slow. This began to pick
+        up after 1820 when the pastoral industry started to grow, leading to Australia supplying over half of the
+        British market's wool by 1850. This led to growth in manufacturing, and the the gold rush of the 1850s
+        encouraged a rapid expansion of the financial industry. Manufacturing continued to grow in response to
+        increased government efforts in community development towards the end of the 19th century.</p>
+
+    <p>The <a href='https://drive.google.com/drive/folders/1D0Yj4-Lr-P2XEzuv4L2M_sEBhkCGUtem' target='_blank'>Sands &
+        McDougal business directory data</a> is a fascinating resource of the complexion of Victorian businesses
+        from this time period onward. Its first records appear in 1896, when manufacturing was still the biggest
+        contributor to our country's wealth.</p>
+
+    <h3>Mix of Victorian industry over time</h3>
+    <div class="heading-footnote">(Victoria, 1896-1975)</div>
 
 	<div class="chart-container" id="pie-canvas-holder" style="width:900px; height: 500px;">
 		<canvas id="pie-chart-area"></canvas>
@@ -263,8 +279,17 @@
         $("#pie-controls .year").first().addClass("selected");
 	</script>
 
+    <p>This incredible resource brings to life the story of our nation over the 80-odd year period it captures.
+        Manufacturing continued to grow strongly in the early 20th century, as it became a huge supplier during WW2.
+        Although it was quickly surpassed proportionally by a booming retail industry driven by our strong economy.
+        We can see how services industries experienced steady growth across this time, but especially into the
+        1970s when oil price rises led to recession and a slowing of traditional industries.</p>
+
+    <p>TODO Summarise 70s->2010s here, only if we don't add Trademark  data stuff. Lean on
+        https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/1301.0~2012~Main%20Features~Evolution%20of%20Australian%20Industry~239</p>
+
     <h3>Current industry mix according to ABR</h3>
-    <h4>(Australia, 2016)</h4>
+    <div class="heading-footnote">(Australia, 2016)</div>
 
     <div class="chart-container" id="abns-pie-canvas-holder" style="width:900px; height: 500px;">
 		<canvas id="abns-pie-chart-area"></canvas>
@@ -328,8 +353,14 @@
 		};
 	</script>
 
-    <h3>Industries of ABR businesses v.s. NEIS enrollments</h3>
-</h4>(compared proportionally, excluding "Other")</h4>
+    <p>TODO Summary of where Australia is at today</p>
+
+    <p>TODO something like...Looking to the future, here's what we need. The NEIS data gives us a glimpse of how well we're placed
+        to get there.</p>
+
+    <h3>Industries of today's businesses according to ABN register v.s. NEIS enrollments</h3>
+    <div class="heading-footnote">(compared proportionally, excluding "Other")</div>
+    </h4></h4>
 
 	<div class="chart-container" id="bar-container" style="width:900px; height: 500px;">
 		<canvas id="bar-canvas"></canvas>
@@ -339,26 +370,15 @@
 		var horizontalBarChartData = {
 			labels: <?php echo json_encode($abrVsNeisLabels); ?>, // TODO needs the % taken off
 			datasets: [{
-				label: 'ABR',
+				label: 'ABN register',
 				backgroundColor: "#488f31",
 				data: <?php echo json_encode($abrVsNeisAbrDataset); ?> // TODO needs to be the % data
 			}, {
-				label: 'NEIS',
+				label: 'NEIS data',
 				backgroundColor: "#de425b",
 				data: <?php echo json_encode($abrVsNeisNeisDataset); ?>  // TODO needs to actually be the NEIS data
 			}]
 		};
-
-		/*document.getElementById('randomizeData').addEventListener('click', function() {
-			var zero = Math.random() < 0.2 ? true : false;
-			horizontalBarChartData.datasets.forEach(function(dataset) {
-				dataset.data = dataset.data.map(function() {
-					return zero ? 0.0 : randomScalingFactor();
-				});
-
-			});
-			window.myHorizontalBar.update();
-		});*/
 
 		window.onload = function() {
 			var pieCtx = document.getElementById('pie-chart-area').getContext('2d');
@@ -392,11 +412,27 @@
                                 }
                             }
                         }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return tooltipItem.value + "%";
+                            }
+                        }
                     }
 				}
 			});
 		};
 	</script>
+
+    <p>TODO learnings/implications</p>
+
+    <p>TODO Data sources used</p>
+
+    <p>TODO Data details & disclaimers</p>
+
+    <p>TODO More info - github link, project page link, contact</p>
+
 </body>
 
 </html>
