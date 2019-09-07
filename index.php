@@ -131,6 +131,9 @@
 </head>
 
 <body>
+    <h1>Industry mix historically over time</h1>
+    <h4>(Victoria 1896-1975)</h4>
+
 	<div class="chart-container" id="pie-canvas-holder" style="width:900px; height: 500px;">
 		<canvas id="pie-chart-area"></canvas>
 	</div>
@@ -213,6 +216,9 @@
         $("#pie-controls .year").first().addClass("selected");
 	</script>
 
+    <h1>Current industry mix according to ABR</h1>
+    <h4>(Australia, 2016)</h4>
+
     <div class="chart-container" id="abns-pie-canvas-holder" style="width:900px; height: 500px;">
 		<canvas id="abns-pie-chart-area"></canvas>
 	</div>
@@ -273,13 +279,69 @@
                 }
 			}
 		};
+	</script>
+
+    <h1>Industries of ABR businesses v.s. NEIS enrollments</h1>
+    </h4>(compared proportionally)</h4>
+
+	<div class="chart-container" id="bar-container" style="width:900px; height: 500px;">
+		<canvas id="bar-canvas"></canvas>
+	</div>
+
+    <script>
+		var horizontalBarChartData = {
+			labels: <?php echo json_encode($currentABNsLabels); ?>, // TODO needs the % taken off
+			datasets: [{
+				label: 'ABR',
+				backgroundColor: "#488f31",
+				data: <?php echo json_encode($currentABNsDataset); ?> // TODO needs to be the % data
+			}, {
+				label: 'NEIS',
+				backgroundColor: "#de425b",
+				data: <?php echo json_encode($currentABNsDataset); ?>  // TODO needs to actually be the NEIS data
+			}]
+		};
+
+		/*document.getElementById('randomizeData').addEventListener('click', function() {
+			var zero = Math.random() < 0.2 ? true : false;
+			horizontalBarChartData.datasets.forEach(function(dataset) {
+				dataset.data = dataset.data.map(function() {
+					return zero ? 0.0 : randomScalingFactor();
+				});
+
+			});
+			window.myHorizontalBar.update();
+		});*/
 
 		window.onload = function() {
-			var ctx = document.getElementById('pie-chart-area').getContext('2d');
-			window.pie = new Chart(ctx, pieConfig);
+			var pieCtx = document.getElementById('pie-chart-area').getContext('2d');
+			window.pie = new Chart(pieCtx, pieConfig);
 
-			var ctx = document.getElementById('abns-pie-chart-area').getContext('2d');
-			window.abnsPie = new Chart(ctx, abnsPieConfig);
+			var abnsCtx = document.getElementById('abns-pie-chart-area').getContext('2d');
+			window.abnsPie = new Chart(abnsCtx, abnsPieConfig);
+
+			var barCtx = document.getElementById('bar-canvas').getContext('2d');
+			window.bar = new Chart(barCtx, {
+				type: 'horizontalBar',
+				data: horizontalBarChartData,
+				options: {
+					// Elements options apply to all of the options unless overridden in a dataset
+					// In this case, we are setting the border of each horizontal bar to be 2px wide
+					elements: {
+						rectangle: {
+							borderWidth: 2,
+						}
+					},
+					responsive: true,
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: true,
+						text: 'ABR businesses v.s. NEIS enrollments, compared proportionally'
+					}
+				}
+			});
 		};
 	</script>
 </body>
