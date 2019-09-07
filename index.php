@@ -63,6 +63,9 @@
     $currentABNsDataset = array();
     $currentABNsLabels = array();
 
+    $abrVsNeisLabels = array();
+    $abrVsNeisAbrDataset = array();
+
     $abnsRaw = file_get_contents("ABNs.csv");
 
     $rows = str_getcsv($abnsRaw, PHP_EOL);
@@ -73,8 +76,44 @@
 
             $currentABNsLabels[] = $rowWithFields[1] . " (" . $rowWithFields[3] . ")";
             $currentABNsDataset[] = $rowWithFields[2];
+
+            if ($rowWithFields[1] != "Other") {
+                $abrVsNeisLabels[] = $rowWithFields[1];
+                $abrVsNeisAbrDataset[] = str_replace("%", "", str_replace("<", "", $rowWithFields[3])); // Just take the raw % number, not the other characters
+            }
         }
         $isFirst = false;
+    }
+
+    // -------
+
+    $abrVsNeisNeisDataset = array();
+
+    $neisRaw = file_get_contents("NEIS.csv");
+
+    $neisRows = array();
+    $rows = str_getcsv($neisRaw, PHP_EOL);
+    $isFirst = true;
+    foreach ($rows as $row) {
+        if (!$isFirst) {
+            $rowWithFields = str_getcsv($row, ",");
+
+            // Store the rows by industry
+            $neisRows[$rowWithFields[1]] = $rowWithFields;
+        }
+        $isFirst = false;
+    }
+
+    // Add the dataset according to the order set by the ABR data
+    foreach ($abrVsNeisLabels as $industry) {
+        $matchingEntry = $neisRows[$industry];
+        if (!$matchingEntry) {
+            echo "matching issue for $industry<br />";
+            continue;
+        }
+
+        $abrVsNeisNeisDataset[] = str_replace("%", "", str_replace("<", "", $matchingEntry[4])); // Just take the raw % number, not the other characters
+
     }
 ?>
 
@@ -82,7 +121,7 @@
 <html>
 
 <head>
-	<title>Pie Chart</title>
+	<title>Australian InduStory :: GovHack 2019</title>
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -131,7 +170,15 @@
 </head>
 
 <body>
-    <h1>Industry mix historically over time</h1>
+    <h1>Australian Indu<span class="story">Story</span></h1>
+    <h2>"Where we've come from, where we're at, and where we need help"</h2>
+    <h3>A GovHack 2019 project by CamBamBaJam</h3>
+
+    <div>Menu: Overview :: The story :: Data sources used :: Data details & disclaimers :: More info</div>
+
+    <p>Carl Sagan once said "You have to know the past to understand the present".</p>
+
+    <h3>Industry mix historically over time</h3>
     <h4>(Victoria 1896-1975)</h4>
 
 	<div class="chart-container" id="pie-canvas-holder" style="width:900px; height: 500px;">
@@ -216,7 +263,7 @@
         $("#pie-controls .year").first().addClass("selected");
 	</script>
 
-    <h1>Current industry mix according to ABR</h1>
+    <h3>Current industry mix according to ABR</h3>
     <h4>(Australia, 2016)</h4>
 
     <div class="chart-container" id="abns-pie-canvas-holder" style="width:900px; height: 500px;">
@@ -281,8 +328,8 @@
 		};
 	</script>
 
-    <h1>Industries of ABR businesses v.s. NEIS enrollments</h1>
-    </h4>(compared proportionally)</h4>
+    <h3>Industries of ABR businesses v.s. NEIS enrollments</h3>
+</h4>(compared proportionally, excluding "Other")</h4>
 
 	<div class="chart-container" id="bar-container" style="width:900px; height: 500px;">
 		<canvas id="bar-canvas"></canvas>
@@ -290,15 +337,15 @@
 
     <script>
 		var horizontalBarChartData = {
-			labels: <?php echo json_encode($currentABNsLabels); ?>, // TODO needs the % taken off
+			labels: <?php echo json_encode($abrVsNeisLabels); ?>, // TODO needs the % taken off
 			datasets: [{
 				label: 'ABR',
 				backgroundColor: "#488f31",
-				data: <?php echo json_encode($currentABNsDataset); ?> // TODO needs to be the % data
+				data: <?php echo json_encode($abrVsNeisAbrDataset); ?> // TODO needs to be the % data
 			}, {
 				label: 'NEIS',
 				backgroundColor: "#de425b",
-				data: <?php echo json_encode($currentABNsDataset); ?>  // TODO needs to actually be the NEIS data
+				data: <?php echo json_encode($abrVsNeisNeisDataset); ?>  // TODO needs to actually be the NEIS data
 			}]
 		};
 
@@ -336,10 +383,16 @@
 					legend: {
 						position: 'top',
 					},
-					title: {
-						display: true,
-						text: 'ABR businesses v.s. NEIS enrollments, compared proportionally'
-					}
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                // Include a % sign in the ticks
+                                callback: function(value, index, values) {
+                                    return value + "%";
+                                }
+                            }
+                        }]
+                    }
 				}
 			});
 		};
