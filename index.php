@@ -297,7 +297,7 @@
           <div class="col-md-6 pt-5 ftco-animate">
           	<div class="mt-5">
               		<h1 class="mb-4" style="color: white;">Australian<br />Indu<span class='title-story'>Story</span></h1>
-	            <p class="mb-4" style="color: white;">"Where we've come from, where we're at,<br />and where we need help"</p>
+	            <p class="mb-4" style="color: white;">"Where we've come from, where we are now,<br />and where we need help"</p>
 	            <p><a href="#overview" class="btn btn-primary py-3 px-4">Get started</a></p>
             </div>
           </div>
@@ -321,6 +321,7 @@
                         of Australian industry by homogenising, contextualising & visualising a number of disparate datasets, namely the
                         <a href='https://drive.google.com/drive/folders/1D0Yj4-Lr-P2XEzuv4L2M_sEBhkCGUtem' target='_blank'>Sands &
                         McDougal business directory data</a>,
+                        <a href='https://data.gov.au/data/dataset/tm-link' target='_blank'>TM-Link trademark records data</a>,
                         <a href='https://data.gov.au/dataset/ds-dga-8fc2e133-29f4-4123-a977-b245b32e62df/details?q=' target='_blank'>ABN register data</a> and
                         <a href='https://data.gov.au/dataset/ds-dga-932648b1-7ca1-46c4-99ba-d9a41f98d42f/details?q=NEIS' target='_blank'>
                             New business assistance with NEIS data</a>. I hope you like it!</p>
@@ -461,10 +462,15 @@
                         We can see how services industries experienced steady growth across this time, but especially into the
                         1970s when oil price rises led to recession and a slowing of traditional industries.</p>
 
-                    <p>TODO 70s->2000s intro & intro trademark data. Look at on
-                        https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/1301.0~2012~Main%20Features~Evolution%20of%20Australian%20Industry~239</p>
+                    <p>The trend of manufacturing's decline and the service industry's rise continued into the 80s and 90s.
+                        During this period, where the <b>Sands & McDougal business directory data</b> coverage concludes, <thead>
+                        <a href='https://data.gov.au/data/dataset/tm-link' target='_blank'>TM-Link trademark records data</a>
+                        can help to give context of the type of devleopments industry was working on in this time. Up until the 60s,
+                        this data had entirely focussed on consumer & industrial goods trademarks. But around the 70s, there began
+                        a rise of trademarks relating to services according to the
+                        <a href='https://en.wikipedia.org/wiki/International_(Nice)_Classification_of_Goods_and_Services' target='_blank'>'Nice' classification</a>.</p>
 
-                    <h2 class="mb-4 ftco-animate">Industry mix of registered trademarks over time</h2>
+                    <h2 class="mb-4 ftco-animate">Industry mix of services trademarks over time</h2>
                     <div class="heading-footnote ftco-animate">(Australia, 1970-1999)</div>
 
                 	<div class="chart-container ftco-animate" id="tmlink-pie-canvas-holder" style="width:900px; height: 480px;">
@@ -564,9 +570,12 @@
                         var tmLinkTimerHandle = setTimeout(tmLinkAutoMoveDecade, 2000);
                 	</script>
 
-                    <p>TODO Overview learnings from trademark data</p>
+                    <p>This data shows a decline in financial, construction & transport services developments over this time.
+                        Meanwhile, the education and media industries saw significant leaps forward, as Australia
+                        embraced the growth of the information age. Administrative & support services also grew
+                        substantially during this period.</p>
 
-                    <p>TODO what happened 2000->2015</p>
+                    <p>This brings us up to where we are now.</p>
 
                     <h2 class="mb-4 ftco-animate">Current industry mix according to ABN register</h2>
                     <div class="heading-footnote ftco-animate">(Australia, 2016)</div>
@@ -715,6 +724,7 @@
                     <p><ul>
                         <li><a href='https://drive.google.com/drive/folders/1D0Yj4-Lr-P2XEzuv4L2M_sEBhkCGUtem' target='_blank'>Sands &
                                 McDougal business directory data</a></li>
+                        <li><a href='https://data.gov.au/data/dataset/tm-link' target='_blank'>TM-Link trademark records data</a></li>
                         <li><a href='https://data.gov.au/dataset/ds-dga-8fc2e133-29f4-4123-a977-b245b32e62df/details?q=' target='_blank'>ABN register data</a></li>
                         <li><a href='https://data.gov.au/dataset/ds-dga-932648b1-7ca1-46c4-99ba-d9a41f98d42f/details?q=NEIS' target='_blank'>
                             New business assistance with NEIS</a></li>
@@ -738,7 +748,7 @@
                     <h2 class="mb-4">Data details & notes</h2>
                     <p>Some various detailed notes about how this data was used:<ul>
                         <li>The business history only covers Victoria, whereas other data was Australia-wide. Unfortunately no
-                            equivalent national data was available, and I used it regardless under the assumption that the
+                            equivalent national data was available, and I used it under the assumption that the
                             Victorian data was regardless representative of Australian data when taken as percentages.</li>
                         <li>Extremely minor groupings (&lt;13 businesses) were removed from 2016 ABN register data. These were
                             "government admin & defence" (2), "personal & other services" (2) and "multi-role organisation" (12).
@@ -748,6 +758,8 @@
                             form a single "Other" category. I have done the same for the ABN register data with mining, "electricity,
                             gas, water & waste" and "public administration & safety", all of which were &lt;1%. In the ABN register data,
                             I combined forestry & fishing into agirculture, as the NEIS data also did.</li>
+                        <li>TM-Link 'Nice' classifications were transformed to Australia's standard industry codes by mapping the official
+                            definitions across, manually. I was surprised to found a very clear, near 1:1 mappping.</p>
                     </ul></p>
                   </div>
                 </div>
