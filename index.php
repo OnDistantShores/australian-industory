@@ -453,6 +453,7 @@
                                 handleYearClick($(yearButtons[0]), false);
                             }
                         };
+                        var timerHandle = setTimeout(autoMoveYear, 20000);
                 	</script>
 
                     <p>This incredible resource brings to life the story of our nation over the 80-odd year period it captures.
@@ -567,6 +568,7 @@
                                 handleTmLinkDecadeClick($(tmLinkDecadeButtons[0]), false);
                             }
                         };
+                        var tmLinkTimerHandle = setTimeout(tmLinkAutoMoveDecade, 20000);
                 	</script>
 
                     <p>This data shows a decline in financial, construction & transport services developments over this time.
@@ -650,12 +652,8 @@
                 			var pieCtx = document.getElementById('pie-chart-area').getContext('2d');
                 			window.pie = new Chart(pieCtx, pieConfig);
 
-                            var timerHandle = setTimeout(autoMoveYear, 2000);
-
                 			var tmLinkCtx = document.getElementById('tmlink-pie-chart-area').getContext('2d');
                 			window.tmLinkPie = new Chart(tmLinkCtx, tmLinkPieConfig);
-
-                            var tmLinkTimerHandle = setTimeout(tmLinkAutoMoveDecade, 2000);
 
                 			var abnsCtx = document.getElementById('abns-pie-chart-area').getContext('2d');
                 			window.abnsPie = new Chart(abnsCtx, abnsPieConfig);
