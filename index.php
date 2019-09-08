@@ -463,7 +463,8 @@
                         1970s when oil price rises led to recession and a slowing of traditional industries.</p>
 
                     <p>The trend of manufacturing's decline and the service industry's rise continued into the 80s and 90s.
-                        During this period, where the <b>Sands & McDougal business directory data</b> coverage concludes, <thead>
+                        During this period, where the <a href='https://drive.google.com/drive/folders/1D0Yj4-Lr-P2XEzuv4L2M_sEBhkCGUtem' target='_blank'>
+                        Sands & McDougal business directory data</a> coverage concludes, <thead>
                         <a href='https://data.gov.au/data/dataset/tm-link' target='_blank'>TM-Link trademark records data</a>
                         can help to give context of the type of devleopments industry was working on in this time. Up until the 60s,
                         this data had entirely focussed on consumer & industrial goods trademarks. But around the 70s, there began
@@ -772,7 +773,7 @@
     </div>
     </section>
 
-    <section class="ftco-counter img ftco-section ftco-no-pt ftco-no-pb" id="more-info">
+    <section class="ftco-counter img ftco-section ftco-no-pt ftco-no-pb" id="more-links">
     <div class="container">
         <div class="row d-flex">
             <div class="col-md-6 col-lg-5 d-flex">
