@@ -458,7 +458,7 @@
 
                     <p>This incredible resource brings to life the story of our nation over the 80-odd year period it captures.
                         Manufacturing continued to grow strongly in the early 20th century, as it became a huge supplier during WW2.
-                        Although it was quickly surpassed proportionally by a booming retail industry driven by our strong economy.
+                        Although it was quickly surpassed proportionally by a booming retail industry, driven by our strong economy.
                         We can see how services industries experienced steady growth across this time, but especially into the
                         1970s when oil price rises led to recession and a slowing of traditional industries.</p>
 
@@ -700,10 +700,10 @@
                         that's not necessarily a bad thing. We see strong interest from new businesses in growth areas such as professional,
                         scientific & technical services, as well as in stalwarts such as manufacturing. It's reassuring an appropriate focus
                         on the other growth areas of health care & social assistance as well as education & training. However there does
-                        appear to be hints of a significant shortfall in constructure. It is a surprise to see dramatically few businesses
-                        launching into the financial insurance space considering the current strength of that industry.</p>
+                        appear to be hints of a significant shortfall in construction. It is a surprise to see dramatically few businesses
+                        launching into the financial & insurance space considering the current strength of that industry.</p>
 
-                    <p>Thank you for your attention and interest in this proejct. I hope you've found it both informative & interesting!</p>
+                    <p>Thank you for your attention and interest in this project. I hope you've found it both informative & interesting!</p>
 
                 </div>
             </div>
