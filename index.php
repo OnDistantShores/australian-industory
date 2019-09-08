@@ -794,6 +794,12 @@
                             <li><a href='https://en.wikipedia.org/wiki/Economy_of_Australia' target='_blank'>Economy of Australia</a></li>
                             <li><a href='https://joboutlook.gov.au/futureofwork' target='_blank'>Future of work</a></li>
                         </ul></li>
+                        <li>Technology used:<ul>
+                            <li><a href='https://jquery.com/' target='_blank'>jQuery</a></li>
+                            <li><a href='https://www.chartjs.org/' target='_blank'>Chart.js</a></li>
+                            <li><a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a></li>
+                            <li><a href='https://themewagon.com/themes/free-bootstrap-4-html5-responsive-medical-website-template-mediplus/' target='_blank'>MediPlus Bootstrap theme</a></li>
+                        </ul></li>
                     </ul></p>
                   </div>
                 </div>
